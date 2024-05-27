@@ -9,7 +9,7 @@
     "fs-extra": "^11.2.0",
     "got": "^13.0.0",
     "keypress": "^0.2.1",
-    "listr2": "^6.6.1",
+    "listr2": "^8.2.1",
     "lodash-es": "^4.17.21",
     "luxon": "^3.4.4",
     "pretty-bytes": "^6.1.1",
