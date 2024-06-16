@@ -355,12 +355,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@fullcalendar/core@npm:6.1.11":
-  version: 6.1.11
-  resolution: "@fullcalendar/core@npm:6.1.11"
+"@fullcalendar/core@npm:6.1.13":
+  version: 6.1.13
+  resolution: "@fullcalendar/core@npm:6.1.13"
   dependencies:
     preact: ~10.12.1
-  checksum: 0078a6f96b06a637de08ba28a317bbcbf7768f53ce7891faa2a656ca2bed0e887e555d6f3203b77d6c271ccb128fa85d592411fcfd87746514a5cec68376ad87
+  checksum: 582fb8f5f68a9a85f0db14756041bf3fcf2d5182d7d3a453cd1d891516a9177ea8c63573e65731d262b5436576a7abe06ec16ad2b3c2e1f2ad149f053a19fe09
   languageName: node
   linkType: hard
 
@@ -6549,7 +6549,7 @@ browserlist@latest:
   resolution: "root-workspace-0b6124@workspace:."
   dependencies:
     "@fullcalendar/bootstrap5": 6.1.11
-    "@fullcalendar/core": 6.1.11
+    "@fullcalendar/core": 6.1.13
     "@fullcalendar/daygrid": 6.1.11
     "@fullcalendar/icalendar": 6.1.11
     "@fullcalendar/interaction": 6.1.11
