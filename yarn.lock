@@ -4481,10 +4481,10 @@ browserlist@latest:
   languageName: node
   linkType: hard
 
-"ical.js@npm:1.5.0":
-  version: 1.5.0
-  resolution: "ical.js@npm:1.5.0"
-  checksum: 51df7a01f462dc8a02b3c3c28acb288756071044c4a8b56ff5179995bb219e569e72cfedac6f4ab03dc643be34f5d88c09a7d79c4be6ba8a7623b7336eecb110
+"ical.js@npm:2.0.1":
+  version: 2.0.1
+  resolution: "ical.js@npm:2.0.1"
+  checksum: a0c5417f346a04361d8df7e1f7044f4c1b3e38bd37e407cd223fb4a41f54571cb8438e270a4552f5e733cba9f1509a3c428c3a71a146a568956b142859ebd225
   languageName: node
   linkType: hard
 
@@ -6583,7 +6583,7 @@ browserlist@latest:
     file-saver: 2.0.5
     highcharts: 11.4.0
     html-validate: 8.18.1
-    ical.js: 1.5.0
+    ical.js: 2.0.1
     jquery: 3.7.1
     jquery-migrate: 3.4.1
     js-cookie: 3.0.5
