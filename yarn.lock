@@ -383,12 +383,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@fullcalendar/interaction@npm:6.1.11":
-  version: 6.1.11
-  resolution: "@fullcalendar/interaction@npm:6.1.11"
+"@fullcalendar/interaction@npm:6.1.13":
+  version: 6.1.13
+  resolution: "@fullcalendar/interaction@npm:6.1.13"
   peerDependencies:
-    "@fullcalendar/core": ~6.1.11
-  checksum: c67d4cfa0b158b848fb482835c5f44c52650037a4b912e16e2ea1955bf476c847d0ec95aea79b37b78207b2da3a7c4d2b37bd5c8b15a89bdd5e3b7ae3b7af9ba
+    "@fullcalendar/core": ~6.1.13
+  checksum: 320a8afd3660f87e9476e43703c937f7261272befa175e7e83919b9ae9a3bd6e9f01e79c0fd58b8252d2a48ca151e94d05b7363d944887f4b9f00fbfcc547113
   languageName: node
   linkType: hard
 
@@ -6552,7 +6552,7 @@ browserlist@latest:
     "@fullcalendar/core": 6.1.11
     "@fullcalendar/daygrid": 6.1.11
     "@fullcalendar/icalendar": 6.1.11
-    "@fullcalendar/interaction": 6.1.11
+    "@fullcalendar/interaction": 6.1.13
     "@fullcalendar/list": 6.1.11
     "@fullcalendar/luxon3": 6.1.11
     "@fullcalendar/timegrid": 6.1.11
