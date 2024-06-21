@@ -821,8 +821,6 @@ IDSUBMIT_MAX_VALIDATION_TIME = datetime.timedelta(minutes=20)
 # Age at which a submission expires if not posted
 IDSUBMIT_EXPIRATION_AGE = datetime.timedelta(days=14)
 
-IDSUBMIT_MANUAL_STAGING_DIR = '/tmp/'
-
 IDSUBMIT_FILE_TYPES = (
     'txt',
     'html',
@@ -1065,14 +1063,6 @@ GROUP_ALIAS_DOMAIN = IETF_DOMAIN
 
 TEST_DATA_DIR = os.path.abspath(BASE_DIR + "/../test/data")
 
-# Path to the email alias lists.  Used by ietf.utils.aliases
-DRAFT_ALIASES_PATH = os.path.join(TEST_DATA_DIR, "draft-aliases")
-DRAFT_VIRTUAL_PATH = os.path.join(TEST_DATA_DIR, "draft-virtual")
-DRAFT_VIRTUAL_DOMAIN = "virtual.ietf.org"
-
-GROUP_ALIASES_PATH = os.path.join(TEST_DATA_DIR, "group-aliases")
-GROUP_VIRTUAL_PATH = os.path.join(TEST_DATA_DIR, "group-virtual")
-GROUP_VIRTUAL_DOMAIN = "virtual.ietf.org"
 
 POSTCONFIRM_PATH   = "/a/postconfirm/wrapper"
 

@@ -118,7 +118,10 @@ IANA_SYNC_PROTOCOLS_URL = "http://www.iana.org/protocols/"
 
 RFC_EDITOR_NOTIFICATION_URL = "http://www.rfc-editor.org/parser/parser.php"
 
-STATS_REGISTRATION_ATTENDEES_JSON_URL = 'https://registration.ietf.org/{number}/attendees/?apikey=redacted'
+_registration_api_key = os.environ.get("DATATRACKER_REGISTRATION_API_KEY", None)
+if _registration_api_key is None:
+    raise RuntimeError("DATATRACKER_REGISTRATION_API_KEY must be set")
+STATS_REGISTRATION_ATTENDEES_JSON_URL = f"https://registration.ietf.org/{{number}}/attendees/?apikey={_registration_api_key}"
 
 #FIRST_CUTOFF_DAYS = 12
 #SECOND_CUTOFF_DAYS = 12
@@ -127,7 +130,8 @@ STATS_REGISTRATION_ATTENDEES_JSON_URL = 'https://registration.ietf.org/{number}/
 MEETING_MATERIALS_SUBMISSION_CUTOFF_DAYS = 26
 MEETING_MATERIALS_SUBMISSION_CORRECTION_DAYS = 54
 
-HTPASSWD_COMMAND = "/usr/bin/htpasswd2"
+# disable htpasswd by setting to a do-nothing command
+HTPASSWD_COMMAND = "/bin/true"
 
 _MEETECHO_CLIENT_ID = os.environ.get("DATATRACKER_MEETECHO_CLIENT_ID", None)
 _MEETECHO_CLIENT_SECRET = os.environ.get("DATATRACKER_MEETECHO_CLIENT_SECRET", None)
@@ -191,12 +195,6 @@ if _SCOUT_KEY is not None:
     SCOUT_CORE_AGENT_DOWNLOAD = False
     SCOUT_CORE_AGENT_LAUNCH = False
     SCOUT_REVISION_SHA = __release_hash__[:7]
-
-# Path to the email alias lists.  Used by ietf.utils.aliases
-DRAFT_ALIASES_PATH = "/a/postfix/draft-aliases"
-DRAFT_VIRTUAL_PATH = "/a/postfix/draft-virtual"
-GROUP_ALIASES_PATH = "/a/postfix/group-aliases"
-GROUP_VIRTUAL_PATH = "/a/postfix/group-virtual"
 
 STATIC_URL = os.environ.get("DATATRACKER_STATIC_URL", None)
 if STATIC_URL is None:
