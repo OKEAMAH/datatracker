@@ -1,5 +1,5 @@
 # -*- conf-mode -*-
-setuptools>=51.1.0    # Require this first, to prevent later errors
+setuptools>=70.0.0    # Require this first, to prevent later errors
 #
 argon2-cffi>=21.3.0    # For the Argon2 password hasher option
 beautifulsoup4>=4.11.1    # Only used in tests
