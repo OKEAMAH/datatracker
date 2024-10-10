@@ -323,6 +323,8 @@ def build_position_email(balloter, doc, pos):
 
     if doc.stream_id == "irtf":
         addrs = gather_address_lists('irsg_ballot_saved',doc=doc)
+    elif doc.stream_id == "editorial":
+        addrs = gather_address_lists('rsab_ballot_saved',doc=doc)
     else:
         addrs = gather_address_lists('iesg_ballot_saved',doc=doc)
 
@@ -639,7 +641,7 @@ def ballot_writeupnotes(request, name):
                 existing.save()
 
             if "issue_ballot" in request.POST and not ballot_already_approved:
-                if prev_state.slug in ['watching', 'writeupw', 'goaheadw']:
+                if prev_state.slug in ['writeupw', 'goaheadw']:
                     new_state = State.objects.get(used=True, type="draft-iesg", slug='iesg-eva')
                     prev_tags = doc.tags.filter(slug__in=IESG_SUBSTATE_TAGS)
                     doc.set_state(new_state)
@@ -706,7 +708,7 @@ def ballot_writeupnotes(request, name):
                                    back_url=doc.get_absolute_url(),
                                    ballot_issued=bool(doc.latest_event(type="sent_ballot_announcement")),
                                    warn_lc = not doc.docevent_set.filter(lastcalldocevent__expires__date__lt=date_today(DEADLINE_TZINFO)).exists(),
-                                   warn_unexpected_state= prev_state if bool(prev_state.slug in ['watching', 'ad-eval', 'lc']) else None,
+                                   warn_unexpected_state= prev_state if bool(prev_state.slug in ['ad-eval', 'lc']) else None,
                                    ballot_writeup_form=form,
                                    need_intended_status=need_intended_status,
                                    ))
@@ -1314,10 +1316,23 @@ def rsab_ballot_status(request):
 def parse_ballot_edit_return_point(path, doc_name, ballot_id):
     get_default_path = lambda: urlreverse("ietf.doc.views_doc.document_ballot", kwargs=dict(name=doc_name, ballot_id=ballot_id))
     allowed_path_handlers = {
+        "ietf.community.views.view_list",
         "ietf.doc.views_doc.document_ballot",
         "ietf.doc.views_doc.document_irsg_ballot",
         "ietf.doc.views_doc.document_rsab_ballot",
+        "ietf.doc.views_ballot.irsg_ballot_status",
+        "ietf.doc.views_ballot.rsab_ballot_status",
+        "ietf.doc.views_search.search",
+        "ietf.doc.views_search.docs_for_ad",
+        "ietf.doc.views_search.drafts_in_last_call",
+        "ietf.doc.views_search.recent_drafts",
+        "ietf.group.views.chartering_groups",
+        "ietf.group.views.group_documents",
+        "ietf.group.views.stream_documents",
         "ietf.iesg.views.agenda",
         "ietf.iesg.views.agenda_documents",
+        "ietf.iesg.views.discusses",
+        "ietf.iesg.views.past_documents",
     }
     return validate_return_to_path(path, get_default_path, allowed_path_handlers)
+

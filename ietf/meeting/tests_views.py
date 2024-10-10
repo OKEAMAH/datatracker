@@ -39,7 +39,7 @@ from ietf.doc.models import Document, NewRevisionDocEvent
 from ietf.group.models import Group, Role, GroupFeatures
 from ietf.group.utils import can_manage_group
 from ietf.person.models import Person, PersonalApiKey
-from ietf.meeting.helpers import can_approve_interim_request, can_view_interim_request, preprocess_assignments_for_agenda
+from ietf.meeting.helpers import can_approve_interim_request, can_request_interim_meeting, can_view_interim_request, preprocess_assignments_for_agenda
 from ietf.meeting.helpers import send_interim_approval_request, AgendaKeywordTagger
 from ietf.meeting.helpers import send_interim_meeting_cancellation_notice, send_interim_session_cancellation_notice
 from ietf.meeting.helpers import send_interim_minutes_reminder, populate_important_dates, update_important_dates
@@ -7173,6 +7173,20 @@ class SessionTests(TestCase):
             status_id='schedw',
             add_to_schedule=False,
         )
+        session_with_none_purpose = SessionFactory(
+            meeting=meeting,
+            group__parent=area,
+            purpose_id="none",
+            status_id="schedw",
+            add_to_schedule=False,
+        )
+        tutorial_session = SessionFactory(
+            meeting=meeting,
+            group__parent=area,
+            purpose_id="tutorial",
+            status_id="schedw",
+            add_to_schedule=False,
+        )
         def _sreq_edit_link(sess):
             return urlreverse(
                 'ietf.secr.sreq.views.edit',
@@ -7211,6 +7225,8 @@ class SessionTests(TestCase):
         self.assertContains(r, _sreq_edit_link(proposed_wg_session))  # link to the session request
         self.assertContains(r, rg_session.group.acronym)
         self.assertContains(r, _sreq_edit_link(rg_session))  # link to the session request
+        self.assertContains(r, session_with_none_purpose.group.acronym)
+        self.assertContains(r, tutorial_session.group.acronym)
         # check headings - note that the special types (has_meetings, etc) do not have a group parent
         # so they show up in 'other'
         q = PyQuery(r.content)
@@ -7218,6 +7234,22 @@ class SessionTests(TestCase):
         self.assertEqual(len(q('h2#other-groups')), 1)
         self.assertEqual(len(q('h2#irtf')), 1)  # rg group has irtf group as parent
 
+        # check rounded pills
+        self.assertNotContains(  # no rounded pill for sessions with regular purpose
+            r,
+            '<span class="badge rounded-pill text-bg-info">Regular</span>',
+            html=True,
+        )
+        self.assertNotContains(  # no rounded pill for session with no purpose specified
+            r,
+            '<span class="badge rounded-pill text-bg-info">None</span>',
+            html=True,
+        )
+        self.assertContains(  # rounded pill for session with non-regular purpose
+            r,
+            '<span class="badge rounded-pill text-bg-info">Tutorial</span>',
+            html=True,
+        )
 
     def test_request_minutes(self):
         meeting = MeetingFactory(type_id='ietf')
@@ -7334,10 +7366,7 @@ class HasMeetingsTests(TestCase):
         for gf in GroupFeatures.objects.filter(has_meetings=True):
             for role_name in all_role_names - set(gf.groupman_roles):
                 role = RoleFactory(group__type_id=gf.type_id,name_id=role_name)
-                self.client.login(username=role.person.user.username, password=role.person.user.username+'+password')
-                r = self.client.get(url)
-                self.assertEqual(r.status_code, 403)
-                self.client.logout()
+                self.assertFalse(can_request_interim_meeting(role.person.user))
 
     def test_appears_on_upcoming(self):
         url = urlreverse('ietf.meeting.views.upcoming')

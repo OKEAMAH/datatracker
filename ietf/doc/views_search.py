@@ -485,6 +485,29 @@ def ad_workload(request):
         )
         ad.buckets = copy.deepcopy(bucket_template)
 
+        # https://github.com/ietf-tools/datatracker/issues/4577
+        docs_via_group_ad = Document.objects.exclude(
+            group__acronym="none"
+        ).filter(
+            group__role__name="ad",
+            group__role__person=ad
+        ).filter(
+            states__type="draft-stream-ietf",
+            states__slug__in=["wg-doc","wg-lc","waiting-for-implementation","chair-w","writeupw"]
+        )
+
+        doc_for_ad = Document.objects.filter(ad=ad)
+
+        ad.pre_pubreq = (docs_via_group_ad | doc_for_ad).filter(
+            type="draft"
+        ).filter(
+            states__type="draft",
+            states__slug="active"
+        ).filter(
+            states__type="draft-iesg",
+            states__slug="idexists"
+        ).distinct().count()
+
         for doc in Document.objects.exclude(type_id="rfc").filter(ad=ad):
             dt = doc_type(doc)
             state = doc_state(doc)
@@ -734,7 +757,7 @@ def drafts_in_last_call(request):
     })
 
 def drafts_in_iesg_process(request):
-    states = State.objects.filter(type="draft-iesg").exclude(slug__in=('idexists', 'pub', 'dead', 'watching', 'rfcqueue'))
+    states = State.objects.filter(type="draft-iesg").exclude(slug__in=('idexists', 'pub', 'dead', 'rfcqueue'))
     title = "Documents in IESG process"
 
     grouped_docs = []

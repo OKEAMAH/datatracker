@@ -312,7 +312,7 @@
       "order": 42,
       "slug": "watching",
       "type": "draft-iesg",
-      "used": true
+      "used": false
     },
     "model": "doc.state",
     "pk": 11
@@ -2616,6 +2616,19 @@
     },
     "model": "doc.state",
     "pk": 180
+  },
+  {
+    "fields": {
+      "desc": "The BOF request is spam",
+      "name": "Spam",
+      "next_states": [],
+      "order": 5,
+      "slug": "spam",
+      "type": "bofreq",
+      "used": true
+    },
+    "model": "doc.state",
+    "pk": 182
   },
   {
     "fields": {

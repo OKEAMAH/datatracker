@@ -27,6 +27,8 @@ urlpatterns = [
     url(r'^doc/draft-aliases/$', api_views.draft_aliases),
     # email ingestor
     url(r'email/$', api_views.ingest_email),
+    # email ingestor
+    url(r'email/test/$', api_views.ingest_email_test),
     # GDPR: export of personal information for the logged-in person
     url(r'^export/personal-information/$', api_views.PersonalInformationExportView.as_view()),
     # Email alias information for groups
@@ -57,7 +59,7 @@ urlpatterns = [
     # Email alias listing
     url(r'^person/email/$', api_views.active_email_list),
     # Draft submission API
-    url(r'^submit/?$', submit_views.api_submit),
+    url(r'^submit/?$', submit_views.api_submit_tombstone),
     # Draft upload API
     url(r'^submission/?$', submit_views.api_submission),
     # Draft submission state API
